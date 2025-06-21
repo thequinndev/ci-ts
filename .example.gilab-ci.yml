@@ -1,0 +1,27 @@
+stages:
+  - build
+  - test
+  - deploy
+variables:
+  NODE_IMAGE: node:18
+.build:
+  stage: build
+  image: $NODE_IMAGE
+build:
+  extends:
+    - .build
+  script:
+    - echo "Building the project..."
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 hour
+test:
+  stage: test
+  script:
+    - npm test
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to production..."
